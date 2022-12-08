@@ -2,6 +2,7 @@ package dber
 
 import (
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 	"gorm.io/gorm/logger"
 )
 
@@ -17,6 +18,7 @@ type DBConfig struct {
 type Dber interface {
 	Init(logname string, cfg DBConfig, logger logger.Interface) (*gorm.DB, error)
 	IfNull() string
+	ExAdd(field string, val any) clause.Expr
 	If() string
 	GroupConcat(field string) string
 	GetSlots() int
