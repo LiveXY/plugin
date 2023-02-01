@@ -7,6 +7,7 @@ import (
 	"github.com/livexy/plugin/ider"
 	"github.com/livexy/plugin/jsoner"
 	"github.com/livexy/plugin/osser"
+	"github.com/livexy/plugin/pdfer"
 	"github.com/livexy/plugin/smser"
 	"github.com/livexy/plugin/streamer"
 	"github.com/livexy/plugin/worder"
@@ -48,4 +49,8 @@ type Streamer interface {
 
 type SMSer interface {
 	New(cfg smser.SMSConfig) smser.SMSer
+}
+
+type PDFer interface {
+	New(cfg pdfer.PDFConfig) pdfer.PDFer
 }
