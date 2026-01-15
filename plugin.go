@@ -5,17 +5,17 @@ import (
 	gplugin "plugin"
 	"strings"
 
-	cmap "github.com/orcaman/concurrent-map/v2"
+	"github.com/puzpuzpuz/xsync/v4"
 )
 
-var pluginmap = cmap.New[gplugin.Symbol]()
+var pluginmap = xsync.NewMap[string, gplugin.Symbol]()
 
 func Load[T any](plugpath, name string) T {
 	if len(plugpath) == 0 {
 		plugpath = "./plugins"
 	}
 	name = strings.ToLower(name)
-	obj, ok := pluginmap.Get(name)
+	obj, ok := pluginmap.Load(name)
 	if ok {
 		return obj.(T)
 	}
@@ -32,11 +32,11 @@ func Load[T any](plugpath, name string) T {
 	if !ok {
 		panic("插件 " + name + " 转换T失败！")
 	}
-	pluginmap.Set(name, t)
+	pluginmap.Store(name, t)
 	return t
 }
 
 func Reload[T any](plugpath, name string) T {
-	pluginmap.Remove(name)
+	pluginmap.Delete(name)
 	return Load[T](plugpath, name)
 }
