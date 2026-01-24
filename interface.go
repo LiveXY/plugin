@@ -11,8 +11,6 @@ import (
 	"github.com/livexy/plugin/smser"
 	"github.com/livexy/plugin/streamer"
 	"github.com/livexy/plugin/worder"
-
-	"go.uber.org/zap"
 )
 
 type DBer interface {
@@ -24,7 +22,7 @@ type IDer interface {
 }
 
 type Cacher interface {
-	New(cfg cacher.CacheConfig, logger *zap.Logger) (cacher.Cacher, error)
+	New(cfg cacher.CacheConfig, logger any) (cacher.Cacher, error)
 }
 
 type OSSer interface {

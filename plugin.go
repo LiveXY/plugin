@@ -1,7 +1,7 @@
 package plugin
 
 import (
-	"path"
+	"path/filepath"
 	gplugin "plugin"
 	"strings"
 
@@ -19,7 +19,7 @@ func Load[T any](plugpath, name string) T {
 	if ok {
 		return obj.(T)
 	}
-	so := path.Join(plugpath, name+".so")
+	so := filepath.Join(plugpath, name+".so")
 	plug, err := gplugin.Open(so)
 	if err != nil {
 		panic("插件 " + name + " 加载失败！" + err.Error())
@@ -37,6 +37,7 @@ func Load[T any](plugpath, name string) T {
 }
 
 func Reload[T any](plugpath, name string) T {
+	name = strings.ToLower(name)
 	pluginmap.Delete(name)
 	return Load[T](plugpath, name)
 }

@@ -1,11 +1,5 @@
 package dber
 
-import (
-	"gorm.io/gorm"
-	"gorm.io/gorm/clause"
-	"gorm.io/gorm/logger"
-)
-
 type DBConfig struct {
 	Path         string   `yaml:"path"` // 路径
 	Driver       string   `yaml:"driver"`
@@ -16,9 +10,9 @@ type DBConfig struct {
 }
 
 type Dber interface {
-	Init(logname string, cfg DBConfig, logger logger.Interface) (*gorm.DB, error)
+	Init(logname string, cfg DBConfig, logger any) (any, error)
 	IfNull() string
-	ExAdd(field string, val any) clause.Expr
+	ExAdd(field string, val any) any
 	If() string
 	GroupConcat(field string) string
 	GetSlots() int
